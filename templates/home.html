@@ -47,27 +47,27 @@ $('#ts1-swap-btn').click(function(){
       <div class="col-md-12">
         <div id="test-area2">
             <span id="ts2">Test Sample Two</span>
-            <button id ="ts2-swap-btn" swap-area-id="test-area2" class="btn" type="button" onclick="ts2edit()">Edit Line</button>
+            <button id ="ts2-swap-btn" swap-area-id="test-area2" class="btn" type="button" onclick="ts2ajaxedit()">Edit Line</button>
         </div>
         <script>
-// Replace span text with 
-var ts2edit = function(){
+// Replace span text with text field
+var ts2ajaxedit = function(){
   var origtext;
-  // get content text
+  // get original text content
   origtext = $("#ts2").html();
   // use ajax to call view function. Process 'data' in the call back function
-  $.get('jq_example2/', {origtext: origtext}, function(data){
+  $.get('jq_example2_edit_text/', {origtext: origtext}, function(data){
     $('#test-area2').html(data);
   });
 };          
 
-// Submit text changes (called by new html generated from ts2edit)
-var ts2submit = function(){
+// Submit text changes (called by new html generated from ts2ajaxedit)
+var ts2ajaxsubmit = function(){
   var swaptext;
   // get new text content
-  swaptext = $("#ts2_text_field").val();
+  newtext = $("#ts2_text_field").val();
   // use ajax to call view function.  Process 'data' in the call back function
-  $.get('jq_example2_submit/', {swaptext: swaptext}, function(data){
+  $.get('jq_example2_submit/', {newtext: newtext}, function(data){
     $('#test-area2').html(data);
   });
 };          
