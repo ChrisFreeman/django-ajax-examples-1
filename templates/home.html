@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block title %}jQuery testing - Home{% endblock %}</title>
+    
+{% block body_block %}
+  <div class="container">
+    <div class="row-fluid">
+      <div class="col-md-12">
+        <h2>Ajax Examples</h2>
+      </div>
+    </div> {# row-fluid #}
+    
+    <div class="row-fluid">
+      <div class="col-md-8">
+        <h4>Example 1 - swap text for new text </h4>
+      </div>
+    </div> {# row-fluid #}
+    <div class="row-fluid">
+      <div class="col-md-12">
+        <div id="test-area1">
+            <span id="ts1">Test Sample One</span>
+            <button id ="ts1-swap-btn" swap-area-id="test-area1" swap-text-id="ts1" class="btn" type="button">Swap Text</button>
+        </div>
+        <script>
+$('#ts1-swap-btn').click(function(){
+  var swapid;
+  var swaptextid;
+  var swaptext;
+  swapid = $(this).attr("swap-area-id");
+  swaptextid = $(this).attr("swap-text-id");
+  swaptext = $("#ts1").html();
+  swapcls = $(this).attr("class");
+  $.get('jq_example1/', {swaptext: swaptext}, function(data){
+    $('#test-area1').html(data);
+  });
+});          
+        </script>
+      </div>
+    </div> {# row-fluid #}
+    
+    <div class="row-fluid">
+      <div class="col-md-8">
+        <h4>Example 2 - swap text for textfield edit </h4>
+      </div>
+    </div> {# row-fluid #}
+    <div class="row-fluid">
+      <div class="col-md-12">
+        <div id="test-area2">
+            <span id="ts2">Test Sample Two</span>
+            <button id ="ts2-swap-btn" swap-area-id="test-area2" class="btn" type="button" onclick="ts2edit()">Edit Line</button>
+        </div>
+        <script>
+// Replace span text with 
+var ts2edit = function(){
+  var origtext;
+  // get content text
+  origtext = $("#ts2").html();
+  // use ajax to call view function. Process 'data' in the call back function
+  $.get('jq_example2/', {origtext: origtext}, function(data){
+    $('#test-area2').html(data);
+  });
+};          
+
+// Submit text changes (called by new html generated from ts2edit)
+var ts2submit = function(){
+  var swaptext;
+  // get new text content
+  swaptext = $("#ts2_text_field").val();
+  // use ajax to call view function.  Process 'data' in the call back function
+  $.get('jq_example2_submit/', {swaptext: swaptext}, function(data){
+    $('#test-area2').html(data);
+  });
+};          
+        </script>
+      </div>
+    </div> {# row-fluid #}
+    
+  </div>  {# container #}
+{% endblock %}          
+    
